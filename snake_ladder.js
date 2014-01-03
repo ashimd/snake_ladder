@@ -57,7 +57,7 @@ function drawBackground() {
     setShadow('darkgray');
     drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 20, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'green');
     drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 7, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'darkblue');
-    setShadow();
+    setShadow(); 
 
     var blockDim = {
         width: (playRectArea.x2 - playRectArea.x1) / 10,
