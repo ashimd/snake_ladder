@@ -38,8 +38,11 @@ function erase() {
 function drawBackground() {
     var deduct = 5;
     var grd = context.createLinearGradient(ctrlRectArea.x1, ctrlRectArea.y1, (ctrlRectArea.x2 - ctrlRectArea.x1), ctrlRectArea.y1);
-    grd.addColorStop(0, 'rgb(250, 251, 251)');
-    grd.addColorStop(1, 'rgb(219, 225, 231)');
+    grd.addColorStop(0, 'rgb(200, 247, 200)');
+    grd.addColorStop(0.25, 'rgb(185, 220, 255)');
+    grd.addColorStop(0.5, 'rgb(255, 255, 191)');
+    grd.addColorStop(1, 'rgb(255, 164, 164)');
+
     erase();
     setShadow('darkgray');
     drawRectangle((ctrlRectArea.x1 - deduct), (ctrlRectArea.y1 - deduct), ((ctrlRectArea.x2 + deduct) - (ctrlRectArea.x1 - deduct)), ((ctrlRectArea.y2 + deduct) - (ctrlRectArea.y1 - deduct)), 'stroke', 'black');
@@ -47,6 +50,14 @@ function drawBackground() {
     setShadow();
     drawRectangle(playRectArea.x1, playRectArea.y1, (playRectArea.x2 - playRectArea.x1), (playRectArea.y2 - playRectArea.y1), 'stroke', 'black');
     drawRectangle(ctrlRectArea.x1, ctrlRectArea.y1, (ctrlRectArea.x2 - ctrlRectArea.x1), (ctrlRectArea.y2 - ctrlRectArea.y1), 'fill', grd);
+
+    drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 20, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.95, 'fill', 'white');
+    drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 7, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.95, 'fill', 'white');
+
+    setShadow('darkgray');
+    drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 20, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'green');
+    drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 7, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'darkblue');
+    setShadow();
 
     var blockDim = {
         width: (playRectArea.x2 - playRectArea.x1) / 10,
@@ -93,6 +104,22 @@ function drawRectangle(x, y, width, height, drawStyle, rectColor) {
     context.restore();
 }
 
+function drawCircle(x, y, radius, drawStyle, circColor) {
+    context.save();
+    context.beginPath();
+    context.arc(x, y, radius, 0, Math.PI * 2, false);
+    if (drawStyle == 'stroke') {
+        context.strokeStyle = circColor;
+        context.stroke();
+    }
+    else {
+        context.fillStyle = circColor;
+        context.fill();
+    }
+    context.closePath();
+    context.restore();
+}
+
 function setShadow(shadowColor) {
     if (shadowColor) {
         context.shadowColor = shadowColor;
@@ -117,6 +144,8 @@ function windowToCanvas(x, y) {
 }
 
 // Event handlers.....................................................
+
+
 
 // Initialization.....................................................
 
