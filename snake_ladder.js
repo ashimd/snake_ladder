@@ -15,6 +15,17 @@ var canvas = document.getElementById('canvas'),
         x2: (canvas.width * 0.98),
         y2: (canvas.height * 0.125)
     },
+    blockDim = {
+        width: (playRectArea.x2 - playRectArea.x1) / 10,
+        height: (playRectArea.y2 - playRectArea.y1) / 10
+    },
+    plotNum = [],
+    plotXCod = [],
+    plotYCod = [],
+    incrementX = 0,
+    incrementY = 0,
+    opp = 0,
+    oppCount = 110,
     i = 0;
 
 // Prototype Extension................................................
@@ -57,36 +68,46 @@ function drawBackground() {
     setShadow('darkgray');
     drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 20, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'green');
     drawCircle(ctrlRectArea.x1 + (ctrlRectArea.x2 - ctrlRectArea.x1) / 7, ctrlRectArea.y1 + (ctrlRectArea.y2 - ctrlRectArea.y1) / 2, (ctrlRectArea.x1 + ctrlRectArea.y1) * 0.7, 'fill', 'darkblue');
-    setShadow(); 
-
-    var blockDim = {
-        width: (playRectArea.x2 - playRectArea.x1) / 10,
-        height: (playRectArea.y2 - playRectArea.y1) / 10
-    },
-    incrementX = 0,
-    incrementY = 0,
-    opp = 0;
+    setShadow();
 
     for (i = 1; i <= 100; i++) {
         drawRectangle(playRectArea.x1 + (incrementX * blockDim.width), playRectArea.y1 + (incrementY * blockDim.height), blockDim.width, blockDim.height, 'stroke', 'black');
         if (opp == 0) {
-            if (i % 2 == 0)
+            if (i % 2 == 0) {
                 drawRectangle(playRectArea.x1 + (incrementX * blockDim.width), playRectArea.y1 + (incrementY * blockDim.height), blockDim.width, blockDim.height, 'fill', 'lightgreen');
+                drawText('gray', '24px Palatino', playRectArea.x1 + (incrementX * blockDim.width) + blockDim.width / 2, playRectArea.y1 + (incrementY * blockDim.height) + blockDim.height / 1.5, (100 - (i - 1)), 'center');                
+            }
+            else
+                drawText('black', '24px Palatino', playRectArea.x1 + (incrementX * blockDim.width) + blockDim.width / 2, playRectArea.y1 + (incrementY * blockDim.height) + blockDim.height / 1.5, (100 - (i - 1)), 'center');
+            plotNum.push((100 - (i - 1)));            
         }
         else {
-            if ((i + 1) % 2 == 0)
+            if ((i + 1) % 2 == 0) {
                 drawRectangle(playRectArea.x1 + (incrementX * blockDim.width), playRectArea.y1 + (incrementY * blockDim.height), blockDim.width, blockDim.height, 'fill', 'lightgreen');
+                drawText('gray', '24px Palatino', playRectArea.x1 + (incrementX * blockDim.width) + blockDim.width / 2, playRectArea.y1 + (incrementY * blockDim.height) + blockDim.height / 1.5, oppCount + i, 'center');
+                
+            }
+            else
+                drawText('black', '24px Palatino', playRectArea.x1 + (incrementX * blockDim.width) + blockDim.width / 2, playRectArea.y1 + (incrementY * blockDim.height) + blockDim.height / 1.5, oppCount + i, 'center');
+            plotNum.push(oppCount + i);
         }
+        plotXCod.push(playRectArea.x1 + (incrementX * blockDim.width) + blockDim.width / 2);
+        plotYCod.push(playRectArea.y1 + (incrementY * blockDim.height) + blockDim.height / 1.5);
+
         incrementX += 1;
+
         if (incrementX % 10 == 0) {
             incrementY += 1;
             incrementX = 0;
-            if (opp == 0)
+            if (opp == 0) {
                 opp = 1;
+                oppCount -= 40;
+            }
             else
                 opp = 0;
         }
     }
+    drawStair(99, 39);
 }
 
 function drawRectangle(x, y, width, height, drawStyle, rectColor) {
@@ -120,6 +141,18 @@ function drawCircle(x, y, radius, drawStyle, circColor) {
     context.restore();
 }
 
+function drawText(fillStyle, fontStyle, xPos, yPos, message, txtAlign) {
+    context.fillStyle = fillStyle;
+    context.font = fontStyle;
+    if (txtAlign) {
+        context.textAlign = txtAlign;
+    }
+    else {
+        context.textAlign = "left";
+    }
+    context.fillText(message, xPos, yPos);
+}
+
 function setShadow(shadowColor) {
     if (shadowColor) {
         context.shadowColor = shadowColor;
@@ -141,6 +174,10 @@ function windowToCanvas(x, y) {
         x: x - bbox.left * (canvas.width / bbox.width),
         y: y - bbox.top * (canvas.height / bbox.height)
     };
+}
+
+function drawStair(pntStart, pntEnd) {
+    alert(plotNum.indexOf(pntStart) + ' ' + plotNum.indexOf(pntEnd));
 }
 
 // Event handlers.....................................................
