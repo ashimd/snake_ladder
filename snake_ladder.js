@@ -177,7 +177,7 @@ function windowToCanvas(x, y) {
 }
 
 function drawStair(pntStart, pntEnd) {
-    alert(plotNum.indexOf(pntStart) + ' ' + plotNum.indexOf(pntEnd));
+    //alert(plotNum.indexOf(pntStart) + ' ' + plotNum.indexOf(pntEnd));
 }
 
 // Event handlers.....................................................
